@@ -1,0 +1,34 @@
+extends layout 
+
+block content 
+
+    h1 #{author.name}
+    if author.date_of_birth
+        p Born: #{author.dob_formatted}
+        if author_date_of_death
+            p Died: #{author.dod_formatted}
+    if books.length > 0
+        p #[strong Books: ]
+            ul
+                each book in books
+                    li 
+                        a(href=book.url) #{book.title}
+                    p #[strong Summary: ] #{book.summary}
+    p #[strong] Genres: 
+        if genres.length > 0
+            each val, index in genres
+                a(href=val.url) #{val.name}
+                if index < genres.length - 1
+                    |, &nbsp;
+        else 
+            | Unspecified
+    hr
+
+    p 
+        a(href=author.url+'/delete') Delete author
+
+    hr
+
+    p 
+        a(href=author.url+'/update') Update author
+//-get the books of the author, plus the associated genres he has written in

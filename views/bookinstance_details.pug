@@ -1,0 +1,25 @@
+extends layout 
+
+block content 
+    p #[strong Copy of ] #{bookinstance.book.title}
+    p
+        if bookinstance.status=='Available'
+            span.text-success #{bookinstance.status}
+        else if bookinstance.status=='Maintenance'
+            span.text-danger #{bookinstance.status}
+            br 
+            strong Due back : #{bookinstance.due_back_formatted}
+        else
+            span.text-warning #{bookinstance.status}
+            if bookinstance.status=='Loaned'
+                br
+                strong Due back : #{bookinstance.due_back_formatted}
+    
+    hr
+
+    p
+        a(href=bookinstance.url+'/delete') Delete copy
+    hr
+
+    p
+        a(href=bookinstance.url+'/update') Update copy

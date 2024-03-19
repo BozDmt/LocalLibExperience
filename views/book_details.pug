@@ -1,0 +1,40 @@
+extends layout 
+
+block content
+
+    h1 Title: #{book_detail.title}
+    p #[strong Author: ] 
+        a(href=book_detail.author.url) #{book_detail.author.name}
+    p #[strong Genre: ]   
+        each val, index in book_detail.genre
+            a(href=val.url) #{val.name}
+            if index < book_detail.genre.length - 1
+                |,&nbsp;                
+    p #[strong Summary: ] #{book_detail.summary}
+    p #[strong ISBN: ] #{book_detail.isbn}
+
+    hr 
+
+    p 
+        a(href=book_detail.url+'/delete') Delete book
+    hr
+    p
+        a(href=book_detail.url+'/update') Update book
+
+    div(style='margin-left:20px;margin-top:20px')
+        h4 Copies
+    each val in book_instance 
+        hr
+        if val.status=='Available'
+            p.text-success #{val.status}
+        if val.status=='Maintenance'
+            p.text-danger #{val.status}
+        else if val.status=='Loaned'
+            p.text-warning #{val.status}
+        p #[strong Imprint:] #{val.imprint}
+        if val.status!='Available' 
+            p #[strong Due back:] #{val.due_back_formatted}
+        p #[strong Id: ] 
+            a(href=val.url) #{val._id}
+    else
+        p There are no copies of this book.

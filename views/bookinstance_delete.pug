@@ -1,0 +1,8 @@
+extends layout 
+
+block content 
+    p #[strong Confirm deleting this copy?]
+    form(method='POST')
+        div.form-group 
+            input#instanceid.form-control(type='hidden',name='instanceid',value=bookinstance._id)
+        button.btn.btn-primary(type='submit') Delete
